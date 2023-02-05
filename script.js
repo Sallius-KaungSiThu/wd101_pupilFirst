@@ -1,3 +1,5 @@
+let user_form = document.getElementById('data_form')
+
 const retireve_entries = () => {
     let entries = localStorage.getItem("user_data")
     if (entries) {
@@ -20,16 +22,6 @@ const display_entries = () => {
         const row = "<tr>" + name_tag + email_tag + password_tag + dob_tag + isAccept_tag + "</tr>"
         return row
     }).join('\n')
-    // let td_str = ""
-    // Object.keys(data_entries).forEach(function (key, index) {
-    //     td_str = td_str + "<td>" + data_entries[key] + "</td>"
-    // const name_tag = "<td>" + data_entries['name'] + "<td>"
-    // const email_tag = "<td>" + data_entries['email'] + "<td>"
-    // const password_tag = "<td>" + data_entries['password'] + "<td>"
-    // const dob_tag = "<td>" + data_entries['dob'] + "</td>"
-    // const isAccept_tag = "<td>" + data_entries['isAccept'] + "<td>"
-    // const row = "<tr>" + name_tag + email_tag + password_tag + dob_tag + isAccept_tag + "</tr>"
-    // })
 
     let entries_table = document.getElementById('entries_body')
     entries_table.innerHTML = result
@@ -64,9 +56,8 @@ function validate(element) {
     }
 }
 
-let user_form = document.getElementById('data_form')
 
-let users_entries = []
+let users_entries = retireve_entries()
 let saveData = (event) => {
     event.preventDefault();
     const name = document.getElementById('name').value
@@ -76,17 +67,16 @@ let saveData = (event) => {
     const isAccept = document.getElementById('isAccept').checked
 
     let entries = {
-        'name': name,
-        'email': email,
-        'password': password,
-        'dob': dob,
-        'isAccept': isAccept
+        name,
+        email,
+        password,
+        dob,
+        isAccept
     }
 
     users_entries.push(entries)
     localStorage.setItem('user_data', JSON.stringify(users_entries))
     display_entries()
-
 }
 
 user_form.addEventListener('submit', saveData)
